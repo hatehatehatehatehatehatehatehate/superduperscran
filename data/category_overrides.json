@@ -1,0 +1,6 @@
+{
+  "_help": "Keys are food ids or 'club:<exact venue name>'. Values may set venue, dishes (list), add_dishes, exclude.",
+  "club:(Scrandle developer)": {
+    "venue": "outabout"
+  }
+}

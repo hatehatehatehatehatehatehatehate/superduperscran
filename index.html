@@ -1,0 +1,1305 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Eli&#39;s Scrandle Rip</title>
+<meta name="description" content="Two plates. One crowd. Guess which food the internet rated higher.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8D%BD%EF%B8%8F%3C/text%3E%3C/svg%3E">
+<style>
+@font-face{font-family:'Pacifico';src:url('assets/fonts/Pacifico-Regular.ttf') format('truetype');font-display:swap}
+@font-face{font-family:'Nunito';src:url('assets/fonts/Nunito.ttf') format('truetype');font-weight:200 1000;font-display:swap}
+:root{--plum:#24122b;--plum2:#341b3c;--plum3:#4a2852;--cream:#fbf1dc;--cream2:#ead6b0;--ink:#2b1822;--tomato:#e8553f;--mustard:#f4b740;--mint:#4cc3a5;--rose:#ff7aa8;--muted:#cdb6c9;--shadow:0 18px 40px rgba(10,2,14,.45)}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%}
+body{font-family:'Nunito',system-ui,-apple-system,'Segoe UI',sans-serif;color:var(--cream);background:var(--plum);overflow-x:hidden;
+ background-image:radial-gradient(1200px 600px at 12% -10%,rgba(255,122,168,.2),transparent 60%),radial-gradient(900px 520px at 108% 8%,rgba(244,183,64,.15),transparent 60%),radial-gradient(900px 600px at 50% 125%,rgba(76,195,165,.14),transparent 60%);background-attachment:fixed}
+body::before{content:'';position:fixed;left:0;right:0;bottom:0;height:40vh;pointer-events:none;z-index:0;opacity:.07;
+ background:repeating-conic-gradient(var(--cream) 0 25%,transparent 0 50%) 0 0/56px 56px;
+ -webkit-mask-image:linear-gradient(to top,#000,transparent);mask-image:linear-gradient(to top,#000,transparent)}
+.app{position:relative;z-index:1;max-width:1140px;margin:0 auto;padding:18px 20px 36px}
+button{font:inherit;cursor:pointer;border:0;color:inherit}
+button:focus-visible,input:focus-visible{outline:3px solid var(--mustard);outline-offset:3px}
+kbd{font:800 12px/1 'Nunito',sans-serif;padding:3px 6px;border-radius:6px;background:rgba(251,241,220,.12);border:1px solid rgba(251,241,220,.22)}
+[hidden]{display:none!important}
+a{color:var(--mustard)}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.topbar .group{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.chip{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:999px;background:rgba(251,241,220,.08);border:1px solid rgba(251,241,220,.16);color:var(--cream);font-weight:800;font-size:14px;white-space:nowrap}
+button.chip:hover{background:rgba(251,241,220,.16)}
+.chip.on{background:var(--mustard);color:var(--ink);border-color:transparent}
+.save-pill .dot{width:9px;height:9px;border-radius:50%;background:var(--muted);flex:none}
+.save-pill.file .dot{background:var(--mint);box-shadow:0 0 10px var(--mint)}
+.save-pill.local .dot{background:var(--mustard)}
+.save-pill.error .dot{background:var(--tomato);box-shadow:0 0 10px var(--tomato)}
+.vol{display:inline-flex;align-items:center;gap:6px}
+.vol input{width:84px;accent-color:var(--mustard)}
+.marquee{text-align:center;margin:20px 0 6px}
+.neon{font-family:'Pacifico',cursive;font-weight:400;font-size:clamp(42px,7.6vw,90px);line-height:1.15;margin:0;color:#ffe9f1;
+ text-shadow:0 0 6px #fff,0 0 18px var(--rose),0 0 42px var(--rose),0 0 84px rgba(255,122,168,.55);animation:flicker 8s infinite}
+.neon .last{color:#fff6dd;text-shadow:0 0 6px #fff,0 0 18px var(--mustard),0 0 42px var(--mustard),0 0 84px rgba(244,183,64,.55)}
+@keyframes flicker{0%,17%,21%,61%,64%,100%{opacity:1}19%,62.5%{opacity:.72}}
+.tagline{margin:4px 0 0;color:var(--muted);font-size:18px}
+.tagline b{color:var(--cream)}
+.panel{background:linear-gradient(180deg,rgba(74,40,82,.74),rgba(52,27,60,.8));border:1px solid rgba(251,241,220,.12);border-radius:22px;padding:20px;box-shadow:var(--shadow);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.section-title{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin:0 0 12px;font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--mustard);font-weight:900}
+.section-title span{letter-spacing:.02em;text-transform:none;color:var(--muted);font-weight:700}
+.section-title.gap{margin-top:22px}
+.lobby-grid{display:grid;grid-template-columns:1.25fr .75fr;gap:18px;margin-top:22px;align-items:start}
+.modes{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.mode{text-align:left;padding:14px 16px;border-radius:16px;background:rgba(251,241,220,.06);border:2px solid transparent;transition:transform .15s,border-color .15s,background .15s}
+.mode:hover{transform:translateY(-2px);background:rgba(251,241,220,.1)}
+.mode.on{border-color:var(--mustard);background:rgba(244,183,64,.13)}
+.mode .em{font-size:26px}
+.mode b{display:block;font-size:18px;margin:4px 0 2px}
+.mode small{display:block;color:var(--muted);font-size:14px;line-height:1.35}
+.mode .badge{display:inline-block;margin-top:6px;font-size:12px;font-weight:900;color:var(--mint)}
+.tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+.cats{display:grid;grid-template-columns:repeat(auto-fill,minmax(158px,1fr));gap:10px;max-height:340px;overflow:auto;padding:6px;margin:-6px;scrollbar-color:var(--plum3) transparent}
+.cat{display:flex;flex-direction:column;align-items:flex-start;gap:2px;text-align:left;padding:11px 12px;border-radius:14px;background:var(--cream);color:var(--ink);box-shadow:0 4px 0 var(--cream2);transition:transform .12s}
+.cat:hover{transform:translateY(-2px)}
+.cat.on{outline:3px solid var(--mustard);outline-offset:2px;background:#fff7e6}
+.cat .em{font-size:22px;line-height:1.1}
+.cat b{font-size:15px;line-height:1.2}
+.cat small{font-size:12px;color:#7a5d6c;line-height:1.3}
+.cat.locked{background:rgba(251,241,220,.05);color:var(--muted);box-shadow:none;cursor:not-allowed;border:1px dashed rgba(251,241,220,.25)}
+.cat.locked:hover{transform:none}
+.cat.locked small{color:var(--muted)}
+.cats.disabled{opacity:.45;pointer-events:none}
+.note{margin:10px 0 0;color:var(--muted);font-size:14px;line-height:1.45}
+.players{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
+.players label{display:flex;align-items:center;gap:6px;background:rgba(251,241,220,.08);border-radius:12px;padding:4px 6px 4px 12px}
+.players input{flex:1;min-width:0;background:transparent;border:0;color:var(--cream);font:700 16px 'Nunito',sans-serif;padding:8px 0;outline:none}
+.players button{background:transparent;color:var(--muted);font-size:18px;padding:4px 8px;border-radius:8px}
+.start{width:100%;margin-top:20px;padding:16px 20px;border-radius:16px;background:linear-gradient(180deg,#ff6d55,var(--tomato));color:#fff;font-size:20px;font-weight:1000;letter-spacing:.02em;box-shadow:0 6px 0 #a83524,0 14px 30px rgba(232,85,63,.35);transition:transform .1s,box-shadow .1s}
+.start:hover{filter:brightness(1.05)}
+.start:active{transform:translateY(4px);box-shadow:0 2px 0 #a83524}
+.start:disabled{filter:grayscale(.8);opacity:.55;cursor:not-allowed}
+.start small{display:block;margin-top:3px;font-size:14px;font-weight:800;letter-spacing:0;opacity:.9;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.save-pill{max-width:100%;overflow:hidden}
+.save-pill #save-text{overflow:hidden;text-overflow:ellipsis}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.stat{background:rgba(251,241,220,.07);border-radius:14px;padding:10px;text-align:center}
+.stat b{display:block;font-size:22px;color:var(--mustard)}
+.stat small{color:var(--muted);font-size:12px}
+.ghost{background:rgba(251,241,220,.08);border:1px solid rgba(251,241,220,.16);color:var(--cream);font-weight:800;padding:10px 14px;border-radius:12px}
+.ghost:hover{background:rgba(251,241,220,.16)}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+/* ---------------- game screen */
+.hud{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin:16px 0 10px}
+.hud .left,.hud .right{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.turn{font-family:'Pacifico',cursive;font-size:26px;color:var(--mustard);text-shadow:0 0 18px rgba(244,183,64,.5)}
+.progress{height:8px;border-radius:99px;background:rgba(251,241,220,.1);overflow:hidden;margin-bottom:16px}
+.progress i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--rose),var(--mustard));transition:width .4s}
+.question{text-align:center;margin:0 0 16px;font-size:clamp(20px,2.8vw,28px);font-weight:1000}
+.question span{color:var(--mustard)}
+
+.arena{display:grid;grid-template-columns:1fr auto 1fr;gap:18px;align-items:stretch}
+.vs{align-self:center;width:64px;height:64px;border-radius:50%;display:grid;place-items:center;font:400 26px 'Pacifico',cursive;background:var(--tomato);color:#fff;box-shadow:0 0 0 6px rgba(232,85,63,.25),0 10px 24px rgba(0,0,0,.4);transform:rotate(-8deg)}
+.card{position:relative;display:flex;flex-direction:column;text-align:left;background:var(--cream);color:var(--ink);border-radius:20px;padding:12px 12px 56px;box-shadow:0 8px 0 var(--cream2),var(--shadow);transition:transform .18s,box-shadow .18s,filter .3s;animation:deal .45s cubic-bezier(.2,.9,.3,1.2) both}
+.card.right{animation-delay:.08s}
+.arena:not(.revealed) .card:hover{transform:translateY(-4px) rotate(-.4deg)}
+.arena:not(.revealed) .card.right:hover{transform:translateY(-4px) rotate(.4deg)}
+@keyframes deal{from{opacity:0;transform:translateY(24px) scale(.96)}to{opacity:1;transform:none}}
+.photo{position:relative;aspect-ratio:4/3;border-radius:14px;overflow:hidden;background:#d9c7a4}
+.photo img{width:100%;height:100%;object-fit:cover;display:block}
+.photo .key{position:absolute;left:10px;top:10px;background:rgba(36,18,43,.78);color:var(--cream);font-weight:900;font-size:13px;padding:4px 9px;border-radius:9px}
+.steam{position:absolute;right:16px;top:8px;font-size:22px;animation:steam 3s ease-in-out infinite}
+@keyframes steam{0%,100%{transform:translateY(0);opacity:.15}50%{transform:translateY(-8px);opacity:.75}}
+.card h3{margin:12px 4px 2px;font-size:21px;line-height:1.2}
+.card .sub{margin:0 4px;color:#7a5d6c;font-size:14px;min-height:1.3em}
+.meta{display:flex;flex-wrap:wrap;gap:6px;margin:10px 4px 0}
+.tag{font-size:12px;font-weight:800;background:#f1e1c2;color:#5b3d4c;padding:4px 8px;border-radius:8px}
+.ticket{position:absolute;left:50%;bottom:-20px;transform:translate(-50%,20px) rotate(-3deg);opacity:0;background:var(--mustard);color:var(--ink);padding:8px 24px;border-radius:10px;font-weight:1000;font-size:30px;line-height:1.1;box-shadow:0 8px 20px rgba(0,0,0,.35);transition:all .45s cubic-bezier(.2,.9,.3,1.4);white-space:nowrap;text-align:center}
+.ticket::before,.ticket::after{content:'';position:absolute;top:50%;width:14px;height:14px;border-radius:50%;background:var(--plum);transform:translateY(-50%)}
+.ticket::before{left:-7px}.ticket::after{right:-7px}
+.ticket small{display:block;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;opacity:.75}
+.revealed .ticket{opacity:1;transform:translate(-50%,0) rotate(-3deg)}
+.card.winner{box-shadow:0 8px 0 var(--cream2),0 0 0 4px var(--mint),0 0 40px rgba(76,195,165,.55)}
+.card.loser{filter:saturate(.45) brightness(.82)}
+.card.loser .ticket{background:#d9c7a4}
+.card.picked::after{content:'YOUR PICK';position:absolute;top:-12px;right:14px;background:var(--ink);color:var(--cream);font-size:11px;font-weight:1000;letter-spacing:.12em;padding:5px 10px;border-radius:8px}
+.stamp{position:absolute;top:30%;left:50%;transform:translate(-50%,-50%) rotate(-14deg) scale(2.2);opacity:0;font:400 30px 'Pacifico',cursive;color:#1f8f74;border:4px solid currentColor;border-radius:14px;padding:0 16px;background:rgba(251,241,220,.88);pointer-events:none;transition:all .35s cubic-bezier(.2,.9,.3,1.3);white-space:nowrap}
+.winner .stamp{opacity:1;transform:translate(-50%,-50%) rotate(-14deg) scale(1)}
+.wobble{animation:wobble .5s}
+@keyframes wobble{20%{transform:translateX(-8px) rotate(-1deg)}40%{transform:translateX(7px) rotate(1deg)}60%{transform:translateX(-5px)}80%{transform:translateX(3px)}}
+.verdict{min-height:92px;margin-top:36px;text-align:center}
+.verdict h2{margin:0;font-size:26px;font-weight:1000}
+.verdict h2.good{color:var(--mint)}
+.verdict h2.bad{color:var(--tomato)}
+.verdict p{margin:4px 0 12px;color:var(--muted)}
+.next{padding:13px 26px;border-radius:14px;background:var(--mustard);color:var(--ink);font-weight:1000;font-size:18px;box-shadow:0 5px 0 #b9831f}
+.next:active{transform:translateY(3px);box-shadow:0 2px 0 #b9831f}
+.lives{letter-spacing:2px}
+
+/* ---------------- results */
+.results{max-width:820px;margin:22px auto 0;text-align:center}
+.grade{display:inline-grid;place-items:center;width:120px;height:120px;border-radius:50%;background:var(--cream);color:var(--ink);font:400 64px 'Pacifico',cursive;box-shadow:0 0 0 8px rgba(244,183,64,.35),0 0 60px rgba(244,183,64,.35);margin:6px auto 8px;transform:rotate(-6deg)}
+.results h2{font-size:32px;margin:6px 0 2px}
+.results .big{font-size:20px;color:var(--muted);margin:0 0 16px}
+.squares{font-size:26px;letter-spacing:3px;margin:8px 0 14px;word-break:break-all}
+.podium{display:grid;gap:8px;margin:14px 0;text-align:left}
+.podium div{display:flex;justify-content:space-between;align-items:center;background:rgba(251,241,220,.08);border-radius:12px;padding:10px 14px;font-weight:800}
+.podium div:first-child{background:rgba(244,183,64,.2);border:1px solid var(--mustard)}
+.highlights{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0;text-align:left}
+.mini{display:flex;gap:12px;align-items:center;background:var(--cream);color:var(--ink);border-radius:14px;padding:10px}
+.mini img{width:74px;height:74px;object-fit:cover;border-radius:10px;flex:none}
+.mini small{display:block;color:#7a5d6c;font-weight:800;font-size:11px;letter-spacing:.1em;text-transform:uppercase}
+.mini b{display:block;line-height:1.25}
+.history{display:grid;gap:6px;text-align:left;max-height:280px;overflow:auto;margin-top:10px}
+.history div{display:grid;grid-template-columns:28px 1fr auto;gap:10px;align-items:center;background:rgba(251,241,220,.06);border-radius:10px;padding:8px 12px;font-size:14px}
+.history em{font-style:normal;color:var(--muted)}
+.actions{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:18px}
+.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:var(--cream);color:var(--ink);padding:12px 18px;border-radius:12px;font-weight:900;box-shadow:var(--shadow);z-index:20;max-width:90vw;text-align:center}
+.footer{margin-top:30px;text-align:center;color:var(--muted);font-size:13px;line-height:1.6}
+.footer a{color:var(--muted)}
+.empty{padding:40px;text-align:center}
+@media (max-width:860px){.lobby-grid{grid-template-columns:1fr}.highlights{grid-template-columns:1fr}}
+@media (max-width:640px){.arena{grid-template-columns:1fr;gap:44px}.card{padding-bottom:50px}.vs{width:48px;height:48px;font-size:18px;justify-self:center;margin:-16px 0}.card h3{font-size:18px}.modes{grid-template-columns:1fr}.app{padding:12px 12px 30px}.ticket{font-size:24px}.players{grid-template-columns:1fr}.photo{aspect-ratio:16/10}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="app" id="app">
+  <header class="topbar">
+    <div class="group">
+      <button class="chip" id="home-btn" hidden>← Lobby</button>
+      <span class="chip save-pill" id="save-pill" title="Where your answers are saved"><span class="dot"></span><span id="save-text">Checking save file…</span></span>
+    </div>
+    <div class="group">
+      <button class="chip" id="music-btn" aria-pressed="false">🎵 Music: off</button>
+      <label class="chip vol" title="Music volume">🔈<input id="music-vol" type="range" min="0" max="100" value="55" aria-label="Music volume"></label>
+      <button class="chip" id="mute-btn" aria-pressed="false" title="Mute everything (M)">🔊</button>
+    </div>
+  </header>
+
+  <!-- ================= LOBBY ================= -->
+  <section id="lobby">
+    <div class="marquee">
+      <h1 class="neon" id="title-neon">Eli&#39;s Scrandle Rip</h1>
+      <p class="tagline">Two plates. One crowd. <b>Back the scran the internet loved more.</b></p>
+    </div>
+
+    <div class="lobby-grid">
+      <div class="panel">
+        <h2 class="section-title">Tonight's menu <span id="mode-hint"></span></h2>
+        <div class="modes" id="modes"></div>
+
+        <h2 class="section-title gap">Pick a category <span id="cat-count"></span></h2>
+        <div class="tabs" id="cat-tabs"></div>
+        <div class="cats" id="cats"></div>
+        <p class="note" id="cat-note"></p>
+      </div>
+
+      <div class="panel">
+        <div id="party-setup" hidden>
+          <h2 class="section-title">Who's at the table? <span>2–4 players</span></h2>
+          <div class="players" id="players"></div>
+          <div class="row"><button class="ghost" id="add-player">+ Add a seat</button></div>
+          <h2 class="section-title gap">Rounds each</h2>
+          <div class="tabs" id="party-rounds"></div>
+        </div>
+
+        <div id="difficulty-setup">
+          <h2 class="section-title">How spicy?</h2>
+          <div class="tabs" id="difficulty"></div>
+          <p class="note" id="difficulty-note"></p>
+        </div>
+
+        <button class="start" id="start-btn">Serve it up ↗</button>
+        <p class="note" style="text-align:center"><kbd>←</kbd> <kbd>→</kbd> or <kbd>1</kbd> <kbd>2</kbd> to pick · <kbd>Enter</kbd> next · <kbd>M</kbd> mute</p>
+
+        <h2 class="section-title gap">Your tab <span id="save-detail"></span></h2>
+        <div class="stats">
+          <div class="stat"><b id="st-answered">0</b><small>answers saved</small></div>
+          <div class="stat"><b id="st-acc">–</b><small>accuracy</small></div>
+          <div class="stat"><b id="st-best">0</b><small>best score</small></div>
+        </div>
+        <div class="row">
+          <button class="ghost" id="link-file" hidden>🔗 Save answers to a file…</button>
+          <button class="ghost" id="export-csv">⬇ Answers CSV</button>
+          <button class="ghost" id="export-json">⬇ Answers JSON</button>
+          <button class="ghost" id="clear-local">Clear browser log</button>
+        </div>
+        <p class="note" id="save-help"></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= GAME ================= -->
+  <section id="game" hidden>
+    <div class="hud">
+      <div class="left"><span class="turn" id="turn"></span><span class="chip" id="hud-cat"></span></div>
+      <div class="right"><span class="chip" id="hud-round"></span><span class="chip lives" id="hud-lives" hidden></span><span class="chip" id="hud-streak"></span><span class="chip on" id="hud-score"></span></div>
+    </div>
+    <div class="progress"><i id="progress"></i></div>
+    <p class="question" id="question">Which did <span>the crowd</span> rate higher?</p>
+    <div class="arena" id="arena"></div>
+    <div class="verdict" id="verdict"></div>
+  </section>
+
+  <!-- ================= RESULTS ================= -->
+  <section id="results" hidden>
+    <div class="results panel" id="results-body"></div>
+  </section>
+
+  <footer class="footer">
+    Ratings &amp; photos: the brilliant <a href="https://scrandle.com" target="_blank" rel="noopener">Scrandle</a> community (and <a href="https://x.com/FootyScran" target="_blank" rel="noopener">@FootyScran</a> posters).
+    Fan-made, non-commercial. <span id="db-info"></span>
+  </footer>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+<script src="data/foods.js?v=1791334160"></script>
+<script>
+(() => {
+/* ---- build config ---- */
+const LOBBY_TRACK = null;
+
+/* ---- core.mjs ---- */
+// core.mjs: pure game rules for Eli's Scrandle Rip. No DOM, no storage, no audio.
+// Imported by Node tests; build.py strips the `export` keywords and inlines it.
+
+const GAME_TITLE = "Eli's Scrandle Rip";
+const PERCENT_SOURCES = ['scrandle', 'mensa'];
+const MAX_PLAYERS = 4;
+const ENDLESS_LIVES = 3;
+const CHAMPION_LIMIT = 3;
+
+const DIFFICULTIES = {
+  mixed: { label: 'House Mix', min: 0, max: Infinity, blurb: 'Any gap at all. A bit of everything.' },
+  easy: { label: 'Easy Peasy', min: 25, max: Infinity, blurb: 'The crowd was 25+ points apart.' },
+  medium: { label: 'Medium Rare', min: 10, max: 25, blurb: '10–25 points between them.' },
+  hard: { label: "Knife's Edge", min: 0, max: 10, blurb: 'Under 10 points. Pure instinct.' },
+};
+
+const MODES = {
+  classic: { label: 'Classic', emoji: '🍽️', blurb: 'Ten plates. Back the crowd’s favourite.' },
+  endless: { label: 'Bottomless Refills', emoji: '☕', blurb: 'Winner stays on. Three spills and you’re out.' },
+  party: { label: 'Pass the Plate', emoji: '🫶', blurb: '2–4 players take turns on one device.' },
+  daily: { label: 'Daily Special', emoji: '📅', blurb: 'Same ten plates for everyone today.' },
+};
+
+// ---------------------------------------------------------------- seeded randomness
+function hashString(text) {
+  let h = 2166136261 >>> 0;
+  for (let i = 0; i < text.length; i++) {
+    h ^= text.charCodeAt(i);
+    h = Math.imul(h, 16777619) >>> 0;
+  }
+  return h >>> 0;
+}
+
+function random(state) {
+  // mulberry32 over a serialisable integer kept on the state
+  let t = (state.rng = (state.rng + 0x6d2b79f5) >>> 0);
+  t = Math.imul(t ^ (t >>> 15), t | 1);
+  t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+  return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+}
+
+function dailyKey(date = new Date()) {
+  const y = date.getFullYear(), m = String(date.getMonth() + 1).padStart(2, '0'), d = String(date.getDate()).padStart(2, '0');
+  return `${y}-${m}-${d}`;
+}
+
+function dailySeed(key) {
+  return hashString(`eli-scrandle-rip:daily:${key}`);
+}
+
+// ---------------------------------------------------------------- categories
+function filterByCategory(foods, categoryId) {
+  const [group, slug] = String(categoryId || 'all:everything').split(':');
+  if (group === 'all') return foods.slice();
+  if (group === 'venue') return foods.filter(f => f.venueCat === slug);
+  if (group === 'dish') return foods.filter(f => (f.dishes || []).includes(slug));
+  if (group === 'region') return foods.filter(f => f.region === slug);
+  if (group === 'price') return foods.filter(f => f.tier === slug);
+  return [];
+}
+
+// Foods are only ever paired with foods from the same rating source.
+function groupBySource(foods, minPerSource = 8) {
+  const map = new Map();
+  for (const f of foods) {
+    if (!map.has(f.source)) map.set(f.source, []);
+    map.get(f.source).push(f);
+  }
+  return [...map.entries()]
+    .filter(([, list]) => list.length >= minPerSource)
+    .map(([source, list]) => ({ source, foods: list }))
+    .sort((a, b) => b.foods.length - a.foods.length || a.source.localeCompare(b.source));
+}
+
+function isPlayable(foods, categoryId, minPerSource = 8) {
+  return groupBySource(filterByCategory(foods, categoryId), minPerSource).length > 0;
+}
+
+// ---------------------------------------------------------------- pairing
+function gapOf(a, b) {
+  const pct = PERCENT_SOURCES.includes(a.source) && a.source === b.source;
+  const diff = pct ? Math.abs(a.rating - b.rating) : Math.abs((a.pct ?? 0) - (b.pct ?? 0));
+  return Math.round(diff * 100) / 100;
+}
+
+function inBand(gap, difficulty) {
+  const band = DIFFICULTIES[difficulty] || DIFFICULTIES.mixed;
+  return gap > 0 && gap >= band.min && gap < band.max;
+}
+
+function pickIndex(state, n) {
+  return Math.floor(random(state) * n);
+}
+
+function chooseSource(state) {
+  const total = state.sources.reduce((n, s) => n + s.foods.length, 0);
+  let roll = random(state) * total;
+  for (const s of state.sources) {
+    roll -= s.foods.length;
+    if (roll < 0) return s;
+  }
+  return state.sources[state.sources.length - 1];
+}
+
+function findChallenger(state, list, anchor, used, strict) {
+  for (let i = 0; i < 80; i++) {
+    const b = list[pickIndex(state, list.length)];
+    if (b.id === anchor.id || used.has(b.id) || (b.image && b.image === anchor.image)) continue;
+    const gap = gapOf(anchor, b);
+    if (strict ? inBand(gap, state.difficulty) : gap > 0) return b;
+  }
+  return null;
+}
+
+// Build the next pair. `stayer` keeps its seat (Bottomless Refills).
+function makePair(state, stayer = null) {
+  const used = new Set(state.used);
+  const pool = stayer ? state.sources.find(s => s.source === stayer.source) : chooseSource(state);
+  if (!pool) return null;
+  const list = pool.foods;
+  for (const strict of [true, false]) {
+    for (let attempt = 0; attempt < 120; attempt++) {
+      const a = stayer || list[pickIndex(state, list.length)];
+      if (!stayer && used.has(a.id)) continue;
+      const b = findChallenger(state, list, a, used, strict);
+      if (b) return random(state) < 0.5 ? [a, b] : [b, a];
+      if (stayer) break;
+    }
+  }
+  return null;
+}
+
+// ---------------------------------------------------------------- game state
+function createGame(foods, opts = {}) {
+  const mode = MODES[opts.mode] ? opts.mode : 'classic';
+  const categoryId = mode === 'daily' ? 'all:everything' : opts.categoryId || 'all:everything';
+  const difficulty = mode === 'daily' ? 'mixed' : DIFFICULTIES[opts.difficulty] ? opts.difficulty : 'mixed';
+  const seed = (opts.seed ?? (mode === 'daily' ? dailySeed(opts.dailyKey || dailyKey()) : Date.now())) >>> 0;
+  const names = mode === 'party' ? (opts.players || ['Player 1', 'Player 2']).slice(0, MAX_PLAYERS) : [opts.playerName || 'You'];
+  const perPlayer = Math.max(1, opts.roundsPerPlayer || 5);
+  const state = {
+    mode, categoryId, difficulty, seed, rng: seed,
+    dailyKey: mode === 'daily' ? opts.dailyKey || dailyKey() : null,
+    sessionId: opts.sessionId || `g${seed.toString(36)}`,
+    sources: groupBySource(filterByCategory(foods, categoryId), opts.minPerSource ?? 8),
+    players: names.map(name => ({ name: String(name).slice(0, 18) || 'Player', score: 0, correct: 0, answered: 0, streak: 0, bestStreak: 0 })),
+    totalRounds: mode === 'endless' ? Infinity : mode === 'party' ? perPlayer * names.length : opts.rounds || 10,
+    lives: mode === 'endless' ? ENDLESS_LIVES : null,
+    round: 0, turn: 0, phase: 'choosing', pair: null, champion: null, championWins: 0,
+    used: [], history: [], events: [],
+  };
+  if (!state.sources.length) {
+    state.phase = 'empty';
+    return state;
+  }
+  nextPair(state);
+  return state;
+}
+
+function nextPair(state) {
+  const stay = state.mode === 'endless' && state.champion && state.championWins < CHAMPION_LIMIT ? state.champion : null;
+  let pair = makePair(state, stay);
+  if (!pair && stay) pair = makePair(state, null);
+  if (!pair) {
+    state.phase = 'over';
+    state.pair = null;
+    state.events.push({ type: 'over', reason: 'out-of-food' });
+    return false;
+  }
+  state.pair = pair;
+  for (const f of pair) if (!state.used.includes(f.id)) state.used.push(f.id);
+  state.round += 1;
+  state.phase = 'choosing';
+  state.events.push({ type: 'pair', round: state.round });
+  return true;
+}
+
+function currentPlayer(state) {
+  return state.players[state.turn % state.players.length];
+}
+
+// Which side(s) the crowd preferred: [0], [1], or [0, 1] on a dead heat.
+function winningSides(pair) {
+  const [a, b] = pair;
+  if (a.rating === b.rating) return [0, 1];
+  return a.rating > b.rating ? [0] : [1];
+}
+
+function pointsFor(gap, streak) {
+  const closeness = Math.max(0, 25 - Math.min(gap, 25)) * 2; // up to +50 for knife-edge calls
+  return 100 + Math.round(closeness) + 20 * Math.min(Math.max(streak - 1, 0), 5);
+}
+
+// The player picks side 0 or 1. Returns the answer record (also pushed to history).
+function choose(state, side, meta = {}) {
+  if (state.phase !== 'choosing' || !state.pair || (side !== 0 && side !== 1)) return null;
+  const player = currentPlayer(state);
+  const picked = state.pair[side], other = state.pair[1 - side];
+  const winners = winningSides(state.pair);
+  const correct = winners.includes(side);
+  const gap = gapOf(picked, other);
+  player.answered += 1;
+  let points = 0;
+  if (correct) {
+    player.streak += 1;
+    player.bestStreak = Math.max(player.bestStreak, player.streak);
+    player.correct += 1;
+    points = pointsFor(gap, player.streak);
+    player.score += points;
+  } else {
+    player.streak = 0;
+    if (state.lives !== null) state.lives -= 1;
+  }
+  const record = answerRecord(state, player, side, correct, gap, points, meta);
+  state.history.push(record);
+  if (state.mode === 'endless') {
+    const top = state.pair[winners[0]];
+    if (state.champion && state.champion.id === top.id) state.championWins += 1;
+    else { state.champion = top; state.championWins = 1; }
+  }
+  state.phase = 'revealed';
+  state.events.push({ type: correct ? 'correct' : 'wrong', side, points });
+  return record;
+}
+
+function answerRecord(state, player, side, correct, gap, points, meta = {}) {
+  const [left, right] = state.pair, picked = state.pair[side], other = state.pair[1 - side];
+  return {
+    v: 1,
+    ts: meta.ts || new Date().toISOString(),
+    session: state.sessionId,
+    mode: state.mode,
+    daily: state.dailyKey,
+    category: state.categoryId,
+    difficulty: state.difficulty,
+    round: state.round,
+    player: player.name,
+    side: side === 0 ? 'left' : 'right',
+    pickedId: picked.id, pickedTitle: picked.title, pickedVenue: picked.venue, pickedRating: picked.rating,
+    otherId: other.id, otherTitle: other.title, otherVenue: other.venue, otherRating: other.rating,
+    leftId: left.id, rightId: right.id,
+    source: picked.source,
+    correct, gap, points,
+    ms: Number.isFinite(meta.ms) ? Math.round(meta.ms) : null,
+  };
+}
+
+// Move on after the reveal. Returns false once the game is over.
+function advance(state) {
+  if (state.phase !== 'revealed') return state.phase !== 'over';
+  const outOfLives = state.lives !== null && state.lives <= 0;
+  if (outOfLives || state.round >= state.totalRounds) {
+    state.phase = 'over';
+    state.pair = null;
+    state.events.push({ type: 'over', reason: outOfLives ? 'lives' : 'rounds' });
+    return false;
+  }
+  state.turn += 1;
+  return nextPair(state);
+}
+
+
+// ---------------------------------------------------------------- results
+function standings(state) {
+  return state.players
+    .map((p, i) => ({ ...p, index: i, accuracy: p.answered ? p.correct / p.answered : 0 }))
+    .sort((a, b) => b.score - a.score || b.correct - a.correct || a.index - b.index);
+}
+
+function summarize(state) {
+  const rows = state.history;
+  const correct = rows.filter(r => r.correct).length;
+  const closest = rows.filter(r => r.correct).sort((a, b) => a.gap - b.gap)[0] || null;
+  const bestPick = rows.filter(r => r.correct).sort((a, b) => b.pickedRating - a.pickedRating)[0] || null;
+  const ranking = standings(state);
+  const top = ranking[0];
+  const tie = ranking.length > 1 && ranking[1].score === top.score;
+  return {
+    mode: state.mode, category: state.categoryId, difficulty: state.difficulty, daily: state.dailyKey,
+    rounds: rows.length, correct, accuracy: rows.length ? correct / rows.length : 0,
+    score: state.players.reduce((n, p) => n + p.score, 0),
+    bestStreak: Math.max(0, ...state.players.map(p => p.bestStreak)),
+    closestCall: closest, plateOfTheDay: bestPick,
+    standings: ranking, winner: tie ? null : top.name,
+    grade: grade(rows.length ? correct / rows.length : 0),
+  };
+}
+
+function grade(accuracy) {
+  if (accuracy >= 0.95) return { letter: 'S', title: 'Michelin Mouth' };
+  if (accuracy >= 0.8) return { letter: 'A', title: 'Head Chef' };
+  if (accuracy >= 0.65) return { letter: 'B', title: 'Sous Chef' };
+  if (accuracy >= 0.5) return { letter: 'C', title: 'Line Cook' };
+  if (accuracy >= 0.3) return { letter: 'D', title: 'Kitchen Porter' };
+  return { letter: 'E', title: 'Microwave Enthusiast' };
+}
+
+function shareText(state, title = GAME_TITLE) {
+  const s = summarize(state);
+  const squares = state.history.map(r => (r.correct ? (r.gap < 10 ? '🟨' : '🟩') : '🟥')).join('');
+  const head = state.mode === 'daily' ? `${title} · Daily Special ${state.dailyKey}` : `${title} · ${MODES[state.mode].label}`;
+  return `${head}\n${squares}\n${s.correct}/${s.rounds} · ${s.score} pts · ${s.grade.letter} ${s.grade.title}`;
+}
+
+// ---------------------------------------------------------------- answer log helpers
+const ANSWER_FIELDS = [
+  'ts', 'session', 'mode', 'daily', 'category', 'difficulty', 'round', 'player', 'side',
+  'pickedId', 'pickedTitle', 'pickedVenue', 'pickedRating', 'otherId', 'otherTitle', 'otherVenue', 'otherRating',
+  'source', 'correct', 'gap', 'points', 'ms',
+];
+
+function csvCell(value) {
+  if (value === null || value === undefined) return '';
+  const text = String(value);
+  return /[",\n\r]/.test(text) ? `"${text.replace(/"/g, '""')}"` : text;
+}
+
+function answersToCsv(rows, header = true) {
+  const lines = rows.map(r => ANSWER_FIELDS.map(k => csvCell(r[k])).join(','));
+  return (header ? [ANSWER_FIELDS.join(','), ...lines] : lines).join('\n') + (lines.length || header ? '\n' : '');
+}
+
+// Lifetime stats from any list of answer records (local log or server file).
+function aggregateAnswers(rows) {
+  const byCategory = {}, byFood = {};
+  let correct = 0;
+  for (const r of rows) {
+    if (r.correct) correct += 1;
+    const c = (byCategory[r.category] ||= { answered: 0, correct: 0 });
+    c.answered += 1;
+    if (r.correct) c.correct += 1;
+    const f = (byFood[r.pickedId] ||= { title: r.pickedTitle, picks: 0 });
+    f.picks += 1;
+  }
+  const sessions = new Set(rows.map(r => r.session)).size;
+  const favourites = Object.entries(byFood).map(([id, v]) => ({ id, ...v })).sort((a, b) => b.picks - a.picks).slice(0, 5);
+  return { answered: rows.length, correct, accuracy: rows.length ? correct / rows.length : 0, sessions, byCategory, favourites };
+}
+
+/* ---- audio.js ---- */
+'use strict';
+/* ============ audio.js: lobby music + sound effects (Web Audio, no files needed) ============
+ * The lobby loop is a procedurally generated lo-fi jazz groove: Rhodes-ish chords,
+ * a walking bass, brushed drums and vinyl crackle. Drop a royalty-free track at
+ * assets/audio/lobby.mp3 (or .ogg / .m4a), re-run build.py, and it is used instead.
+ */
+const Sound = (() => {
+  const BPM = 78, BEAT = 60 / BPM, BAR = BEAT * 4, LOOKAHEAD = 0.25;
+  // ii–V–I–vi in F with jazzy extensions; [root midi, chord tones as midi]
+  const PROGRESSION = [
+    [43, [55, 58, 62, 65, 69]],   // Gm9
+    [48, [52, 58, 62, 64, 69]],   // C13
+    [41, [57, 60, 64, 65, 67]],   // Fmaj9
+    [50, [53, 57, 60, 65, 66]],   // Dm9 (with a little rub)
+  ];
+  const MELODY = [72, null, 74, 77, null, 76, 74, null, 72, 69, null, null, 70, null, 69, 67];
+  let ctx = null, master = null, musicBus = null, sfxBus = null, filter = null, noiseBuf = null;
+  let timer = null, nextBar = 0, barIndex = 0, playing = false, mode = 'lobby', fileTrack = null;
+  const settings = { music: 0.55, sfx: 0.7, muted: false };
+
+  const midi = n => 440 * Math.pow(2, (n - 69) / 12);
+
+  function ensure() {
+    if (ctx) return ctx;
+    const AC = window.AudioContext || window.webkitAudioContext;
+    if (!AC) return null;
+    ctx = new AC();
+    master = ctx.createGain();
+    master.connect(ctx.destination);
+    filter = ctx.createBiquadFilter();
+    filter.type = 'lowpass'; filter.frequency.value = 5200; filter.Q.value = 0.4;
+    musicBus = ctx.createGain(); musicBus.connect(filter); filter.connect(master);
+    sfxBus = ctx.createGain(); sfxBus.connect(master);
+    noiseBuf = ctx.createBuffer(1, ctx.sampleRate * 2, ctx.sampleRate);
+    const data = noiseBuf.getChannelData(0);
+    for (let i = 0; i < data.length; i++) data[i] = Math.random() * 2 - 1;
+    applyVolumes();
+    return ctx;
+  }
+
+  function applyVolumes() {
+    if (!ctx) return;
+    const t = ctx.currentTime;
+    master.gain.setTargetAtTime(settings.muted ? 0 : 1, t, 0.05);
+    musicBus.gain.setTargetAtTime(settings.music * (mode === 'game' ? 0.45 : 1) * 0.5, t, 0.4);
+    sfxBus.gain.setTargetAtTime(settings.sfx * 0.6, t, 0.05);
+    filter.frequency.setTargetAtTime(mode === 'game' ? 1300 : 5200, t, 0.6);
+    if (fileTrack) fileTrack.volume = settings.muted ? 0 : settings.music * (mode === 'game' ? 0.45 : 1);
+  }
+
+  function env(gainNode, t, attack, peak, decay, sustain, release, end) {
+    const g = gainNode.gain;
+    g.setValueAtTime(0.0001, t);
+    g.exponentialRampToValueAtTime(peak, t + attack);
+    g.exponentialRampToValueAtTime(Math.max(sustain, 0.0001), t + attack + decay);
+    g.setValueAtTime(Math.max(sustain, 0.0001), end);
+    g.exponentialRampToValueAtTime(0.0001, end + release);
+  }
+
+  function keys(note, t, dur, vel = 0.06, dest = musicBus) {
+    const o1 = ctx.createOscillator(), o2 = ctx.createOscillator(), g = ctx.createGain(), trem = ctx.createGain(), lfo = ctx.createOscillator();
+    o1.type = 'sine'; o2.type = 'triangle';
+    o1.frequency.value = midi(note); o2.frequency.value = midi(note) * 2.001;
+    const g2 = ctx.createGain(); g2.gain.value = 0.18;
+    lfo.frequency.value = 4.2; const lfoGain = ctx.createGain(); lfoGain.gain.value = 0.12;
+    lfo.connect(lfoGain); lfoGain.connect(trem.gain); trem.gain.value = 0.88;
+    o1.connect(g); o2.connect(g2); g2.connect(g); g.connect(trem); trem.connect(dest);
+    env(g, t, 0.012, vel, 0.5, vel * 0.35, 0.6, t + dur);
+    for (const o of [o1, o2, lfo]) { o.start(t); o.stop(t + dur + 0.7); }
+  }
+
+  function bass(note, t, dur) {
+    const o = ctx.createOscillator(), g = ctx.createGain(), lp = ctx.createBiquadFilter();
+    o.type = 'triangle'; o.frequency.value = midi(note);
+    lp.type = 'lowpass'; lp.frequency.value = 700;
+    o.connect(lp); lp.connect(g); g.connect(musicBus);
+    env(g, t, 0.01, 0.22, 0.18, 0.1, 0.08, t + dur * 0.85);
+    o.start(t); o.stop(t + dur + 0.2);
+  }
+
+  function noise(t, dur, freq, vel, type = 'bandpass', dest = musicBus) {
+    const src = ctx.createBufferSource(), f = ctx.createBiquadFilter(), g = ctx.createGain();
+    src.buffer = noiseBuf; src.loop = true;
+    f.type = type; f.frequency.value = freq; f.Q.value = 0.8;
+    src.connect(f); f.connect(g); g.connect(dest);
+    env(g, t, 0.004, vel, dur * 0.6, vel * 0.2, dur * 0.4, t + dur * 0.4);
+    src.start(t, Math.random()); src.stop(t + dur + 0.1);
+  }
+
+  function kick(t) {
+    const o = ctx.createOscillator(), g = ctx.createGain();
+    o.frequency.setValueAtTime(110, t); o.frequency.exponentialRampToValueAtTime(42, t + 0.18);
+    o.connect(g); g.connect(musicBus);
+    env(g, t, 0.003, 0.32, 0.16, 0.001, 0.05, t + 0.18);
+    o.start(t); o.stop(t + 0.3);
+  }
+
+  function crackle(t, dur) {
+    for (let i = 0; i < 7; i++) {
+      if (Math.random() < 0.55) noise(t + Math.random() * dur, 0.02, 2500 + Math.random() * 4000, 0.02, 'highpass');
+    }
+  }
+
+  // Schedule one bar of the groove starting at time t.
+  function scheduleBar(t, index) {
+    const [root, chord] = PROGRESSION[index % PROGRESSION.length];
+    const swing = BEAT * 0.16;
+    // Rhodes chord: on 1, re-voiced softly on the "and" of 2
+    chord.forEach((n, i) => keys(n, t + i * 0.012, BEAT * 1.9, 0.045));
+    chord.slice(1, 4).forEach((n, i) => keys(n, t + BEAT * 1.5 + swing + i * 0.01, BEAT * 1.2, 0.028));
+    // Walking bass: root, fifth, octave-ish, chromatic approach to next root
+    const nextRoot = PROGRESSION[(index + 1) % PROGRESSION.length][0];
+    [root, root + 7, root + 12, nextRoot + (nextRoot > root ? -1 : 1)].forEach((n, i) => bass(n, t + i * BEAT, BEAT));
+    // Drums: soft kick on 1 & 3, brushed snare on 2 & 4, swung shaker eighths
+    kick(t); kick(t + BEAT * 2 + (index % 2 ? swing : 0));
+    noise(t + BEAT, 0.22, 1800, 0.07); noise(t + BEAT * 3, 0.22, 1800, 0.07);
+    for (let i = 0; i < 8; i++) noise(t + i * (BEAT / 2) + (i % 2 ? swing : 0), 0.05, 7500, i % 2 ? 0.018 : 0.03, 'highpass');
+    // A lazy melody every other bar
+    if (index % 2 === 1) {
+      const half = MELODY.slice(index % 4 === 1 ? 0 : 8, index % 4 === 1 ? 8 : 16);
+      half.forEach((n, i) => { if (n) keys(n, t + i * (BEAT / 2) + (i % 2 ? swing : 0), BEAT * 0.45, 0.035); });
+    }
+    crackle(t, BAR);
+  }
+
+  function tick() {
+    if (!playing || !ctx) return;
+    while (nextBar < ctx.currentTime + LOOKAHEAD + BAR) {
+      scheduleBar(nextBar, barIndex++);
+      nextBar += BAR;
+    }
+  }
+
+  // build.py sets LOBBY_TRACK when assets/audio/lobby.(mp3|ogg|m4a) exists; otherwise it's null.
+  async function tryFileTrack() {
+    const track = typeof LOBBY_TRACK === 'string' ? LOBBY_TRACK : null;
+    if (!track || fileTrack === false) return false;
+    if (fileTrack) return true;
+    fileTrack = new Audio(track);
+    fileTrack.loop = true;
+    fileTrack.addEventListener('error', () => { // broken file: fall back to the generated groove
+      fileTrack = false;
+      if (playing) { playing = false; startMusic(); }
+    }, { once: true });
+    return true;
+  }
+
+  async function startMusic() {
+    if (!ensure()) return false;
+    if (ctx.state === 'suspended') await ctx.resume();
+    if (playing) return true;
+    playing = true;
+    if (await tryFileTrack()) {
+      applyVolumes();
+      fileTrack.play().catch(() => {});
+      return true;
+    }
+    nextBar = ctx.currentTime + 0.08;
+    tick();
+    timer = setInterval(tick, 120);
+    return true;
+  }
+
+  function stopMusic() {
+    playing = false;
+    clearInterval(timer);
+    timer = null;
+    if (fileTrack) fileTrack.pause();
+  }
+
+  // ---------------------------------------------------------------- sound effects
+  function blip(freqs, { type = 'sine', step = 0.07, dur = 0.18, vel = 0.12 } = {}) {
+    if (!ensure() || settings.muted) return;
+    const t = ctx.currentTime + 0.01;
+    freqs.forEach((f, i) => {
+      const o = ctx.createOscillator(), g = ctx.createGain();
+      o.type = type; o.frequency.value = f;
+      o.connect(g); g.connect(sfxBus);
+      env(g, t + i * step, 0.006, vel, dur * 0.5, vel * 0.25, dur * 0.5, t + i * step + dur * 0.4);
+      o.start(t + i * step); o.stop(t + i * step + dur + 0.1);
+    });
+  }
+
+  const sfx = {
+    hover: () => blip([1320], { dur: 0.05, vel: 0.025 }),
+    pick: () => blip([660, 880], { type: 'triangle', step: 0.04, dur: 0.09, vel: 0.08 }),
+    tick: () => blip([1900], { type: 'square', dur: 0.025, vel: 0.012 }),
+    correct: () => blip([midi(72), midi(76), midi(79), midi(84)], { type: 'triangle', step: 0.075, dur: 0.32, vel: 0.11 }),
+    wrong: () => { blip([midi(55), midi(54)], { type: 'sawtooth', step: 0.13, dur: 0.28, vel: 0.05 }); },
+    fanfare: () => blip([midi(67), midi(72), midi(76), midi(79), midi(84), midi(88)], { type: 'triangle', step: 0.09, dur: 0.5, vel: 0.1 }),
+    plate: () => { if (ensure() && !settings.muted) noise(ctx.currentTime + 0.01, 0.12, 3200, 0.05, 'bandpass', sfxBus); },
+  };
+
+  return {
+    settings,
+    startMusic,
+    stopMusic,
+    isPlaying: () => playing,
+    setMode(next) { mode = next; applyVolumes(); },
+    setMusic(v) { settings.music = Math.max(0, Math.min(1, v)); applyVolumes(); },
+    setSfx(v) { settings.sfx = Math.max(0, Math.min(1, v)); applyVolumes(); },
+    setMuted(m) { settings.muted = !!m; applyVolumes(); },
+    load(saved) { Object.assign(settings, saved || {}); applyVolumes(); },
+    play(name) { try { sfx[name]?.(); } catch { /* audio is best-effort */ } },
+  };
+})();
+
+/* ---- main.js ---- */
+'use strict';
+/* ============ main.js: browser shell for Eli's Scrandle Rip (DOM, storage, saving, flow) ============ */
+const DB = window.SCRAN_DB || { foods: [], categories: [], countries: {}, sources: {}, minPlayable: 8 };
+const $ = id => document.getElementById(id);
+const STORE = { settings: 'esr:settings', log: 'esr:answers', pending: 'esr:pending', best: 'esr:best', daily: 'esr:daily', sound: 'esr:sound' };
+const load = (key, fallback) => { try { const v = JSON.parse(localStorage.getItem(key)); return v ?? fallback; } catch { return fallback; } };
+const save = (key, value) => { try { localStorage.setItem(key, JSON.stringify(value)); } catch { /* storage full or blocked */ } };
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const pick = list => list[Math.floor(Math.random() * list.length)];
+const TABS = [['all', 'Everything'], ['venue', 'Venues'], ['dish', 'Dishes'], ['region', 'Regions'], ['price', 'Prices']];
+const CATS = new Map(DB.categories.map(c => [c.id, c]));
+const PLAYABLE = new Map(DB.categories.map(c => [c.id, isPlayable(DB.foods, c.id, DB.minPlayable || 8)]));
+const RIGHT = ["Chef's kiss!", 'The crowd agrees!', 'Absolute scran instinct.', 'Plate licked clean.', 'Ten out of ten, no notes.'];
+const CLOSE = ["Knife's-edge call. Nailed it!", 'By a whisker! What a palate.', 'Photo finish, and you called it.'];
+const WRONG = ['Sent back to the kitchen.', 'The crowd disagrees…', 'Bit undercooked, that one.', 'Spilled the gravy.', 'Respectfully: no.'];
+
+const ui = {
+  screen: 'lobby', game: null, shownAt: 0, busy: false,
+  settings: Object.assign({ mode: 'classic', categoryId: 'all:everything', difficulty: 'mixed', tab: 'all',
+    players: ['Player 1', 'Player 2'], roundsPerPlayer: 5, musicOn: true }, load(STORE.settings, {})),
+};
+if (!CATS.has(ui.settings.categoryId) || !PLAYABLE.get(ui.settings.categoryId)) ui.settings.categoryId = 'all:everything';
+const persist = () => save(STORE.settings, ui.settings);
+
+function toast(text, ms = 2600) {
+  const el = $('toast');
+  el.textContent = text; el.hidden = false;
+  clearTimeout(toast.t); toast.t = setTimeout(() => { el.hidden = true; }, ms);
+}
+
+function download(name, text, type) {
+  const url = URL.createObjectURL(new Blob([text], { type }));
+  const a = Object.assign(document.createElement('a'), { href: url, download: name });
+  document.body.append(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+/* ---------------- answer saving ----------------
+ * Every answer goes to the browser log (stats + exports). On top of that:
+ *  - served by serve.py -> POSTed and appended to data/answers/answers.jsonl + answers.csv
+ *  - opened as a file   -> optionally rewritten into a CSV you link (Chromium File System Access API)
+ */
+const Saver = {
+  mode: 'local', serverCount: 0, files: [], handle: null, flushing: false,
+  async init() {
+    if (location.protocol.startsWith('http')) {
+      try {
+        const res = await fetch('api/health', { cache: 'no-store' });
+        if (res.ok) { const j = await res.json(); this.mode = 'file'; this.serverCount = j.answers; this.files = j.files || []; }
+      } catch { /* static hosting without the save server */ }
+    }
+    setInterval(() => { if (this.mode === 'error') this.flush(); }, 8000);
+    this.render();
+    this.flush();
+  },
+  log: () => load(STORE.log, []),
+  record(rec) {
+    const log = this.log(); log.push(rec); save(STORE.log, log);
+    if (this.mode === 'file' || this.mode === 'error') {
+      const pending = load(STORE.pending, []); pending.push(rec); save(STORE.pending, pending);
+      this.flush();
+    }
+    if (this.handle) this.writeLinked();
+    this.render();
+  },
+  async flush() {
+    const batch = load(STORE.pending, []);
+    if (this.flushing || !batch.length || this.mode === 'local' || this.mode === 'linked') return;
+    this.flushing = true;
+    try {
+      const res = await fetch('api/answers', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ answers: batch }) });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const j = await res.json();
+      save(STORE.pending, load(STORE.pending, []).slice(batch.length));
+      this.serverCount = j.total; this.mode = 'file';
+    } catch { this.mode = 'error'; }
+    this.flushing = false;
+    this.render();
+    if (this.mode === 'file' && load(STORE.pending, []).length) this.flush();
+  },
+  async link() {
+    try {
+      this.handle = await window.showSaveFilePicker({ suggestedName: 'scrandle-rip-answers.csv', types: [{ description: 'CSV', accept: { 'text/csv': ['.csv'] } }] });
+      this.mode = 'linked';
+      await this.writeLinked();
+      toast(`Linked! Answers now save to ${this.handle.name}`);
+    } catch (e) { if (e?.name !== 'AbortError') toast('Could not link that file.'); }
+    this.render();
+  },
+  async writeLinked() {
+    try {
+      const w = await this.handle.createWritable();
+      await w.write(answersToCsv(this.log()));
+      await w.close();
+    } catch { this.handle = null; this.mode = 'local'; toast('Lost access to the linked file; saving in this browser.'); this.render(); }
+  },
+  render() {
+    const pill = $('save-pill'), text = $('save-text'), pending = load(STORE.pending, []).length;
+    pill.className = 'chip save-pill ' + (this.mode === 'file' || this.mode === 'linked' ? 'file' : this.mode);
+    $('link-file').hidden = !(this.mode === 'local' && 'showSaveFilePicker' in window);
+    if (this.mode === 'file') {
+      text.textContent = `Saving to ${this.files[0] || 'data/answers/answers.jsonl'} · ${this.serverCount}`;
+      pill.title = `Every answer is appended to ${this.files.join(' and ')}`;
+    } else if (this.mode === 'linked') {
+      text.textContent = `Saving to ${this.handle?.name} · ${this.log().length}`;
+      pill.title = 'Answers are written to the CSV file you linked';
+    } else if (this.mode === 'error') {
+      text.textContent = `Save server offline · ${pending} queued`;
+      pill.title = 'Answers are kept and re-sent automatically when serve.py is back';
+    } else {
+      text.textContent = 'Saving in this browser only';
+      pill.title = 'Run "python3 serve.py" to save every answer to data/answers/, or link a file / export from the lobby';
+    }
+    renderStats();
+  },
+};
+
+function renderStats() {
+  const agg = aggregateAnswers(Saver.log());
+  $('st-answered').textContent = Saver.mode === 'file' ? Saver.serverCount : agg.answered;
+  $('st-acc').textContent = agg.answered ? `${Math.round(agg.accuracy * 100)}%` : '–';
+  $('st-best').textContent = Math.max(0, ...Object.values(load(STORE.best, {})));
+  $('save-detail').textContent = Saver.mode === 'file' ? 'saved to data/answers/' : 'saved in this browser';
+}
+
+/* ---------------- music ---------------- */
+function syncSoundUi() {
+  $('music-btn').textContent = `🎵 Music: ${ui.settings.musicOn && Sound.isPlaying() ? 'on' : 'off'}`;
+  $('music-btn').setAttribute('aria-pressed', String(ui.settings.musicOn && Sound.isPlaying()));
+  $('mute-btn').textContent = Sound.settings.muted ? '🔇' : '🔊';
+  $('mute-btn').setAttribute('aria-pressed', String(Sound.settings.muted));
+  $('music-vol').value = Math.round(Sound.settings.music * 100);
+}
+async function wakeAudio() {
+  if (ui.settings.musicOn && !Sound.isPlaying()) { await Sound.startMusic(); syncSoundUi(); }
+}
+
+
+/* ---------------- lobby ---------------- */
+function catLabel(id) {
+  const c = CATS.get(id);
+  return c ? `${c.emoji} ${c.label}` : '🍽️ Everything';
+}
+
+function renderModes() {
+  const today = load(STORE.daily, {})[dailyKey()];
+  $('modes').innerHTML = Object.entries(MODES).map(([key, m]) => `
+    <button class="mode${ui.settings.mode === key ? ' on' : ''}" data-mode="${key}" aria-pressed="${ui.settings.mode === key}">
+      <span class="em">${m.emoji}</span><b>${esc(m.label)}</b><small>${esc(m.blurb)}</small>
+      ${key === 'daily' ? `<span class="badge">${today ? `Today: ${today.correct}/${today.rounds} · ${today.score} pts ✓` : `Fresh today · ${dailyKey()}`}</span>` : ''}
+    </button>`).join('');
+  const daily = ui.settings.mode === 'daily';
+  $('cats').classList.toggle('disabled', daily);
+  $('party-setup').hidden = ui.settings.mode !== 'party';
+  $('difficulty-setup').hidden = daily;
+  $('mode-hint').textContent = daily ? 'Daily uses the whole menu' : '';
+  updateStart();
+}
+
+function renderTabs() {
+  $('cat-tabs').innerHTML = TABS.map(([key, label]) =>
+    `<button class="chip${ui.settings.tab === key ? ' on' : ''}" data-tab="${key}">${label}</button>`).join('');
+}
+
+function renderCats() {
+  const list = DB.categories.filter(c => c.group === ui.settings.tab && (c.count > 0 || c.group === 'venue'));
+  const open = list.filter(c => PLAYABLE.get(c.id));
+  $('cat-count').textContent = `${open.length} of ${list.length} open`;
+  $('cats').innerHTML = list.map(c => {
+    const playable = PLAYABLE.get(c.id), on = ui.settings.categoryId === c.id;
+    const sub = playable ? `${c.count.toLocaleString()} plates` : c.count ? `${c.count} plates · needs ${DB.minPlayable}+` : 'Awaiting photos';
+    return `<button class="cat${on ? ' on' : ''}${playable ? '' : ' locked'}" data-cat="${c.id}" ${playable ? '' : 'aria-disabled="true"'} title="${esc(c.blurb)}">
+      <span class="em">${c.emoji}</span><b>${esc(c.label)}</b><small>${esc(sub)}</small></button>`;
+  }).join('');
+  const locked = list.length - open.length;
+  $('cat-note').innerHTML = ui.settings.tab === 'venue' && locked
+    ? `🔒 ${locked} venue types (fast food, restaurants, school dinners…) unlock when foods are added to <code>data/custom/manifest.csv</code>.`
+    : esc(CATS.get(ui.settings.categoryId)?.blurb || '');
+}
+
+function renderDifficulty() {
+  $('difficulty').innerHTML = Object.entries(DIFFICULTIES).map(([key, d]) =>
+    `<button class="chip${ui.settings.difficulty === key ? ' on' : ''}" data-diff="${key}">${esc(d.label)}</button>`).join('');
+  $('difficulty-note').textContent = DIFFICULTIES[ui.settings.difficulty].blurb;
+}
+
+function renderPlayers() {
+  const ps = ui.settings.players;
+  $('players').innerHTML = ps.map((name, i) => `
+    <label>🍴<input value="${esc(name)}" maxlength="18" data-player="${i}" aria-label="Player ${i + 1} name">
+    ${ps.length > 2 ? `<button data-remove="${i}" aria-label="Remove player ${i + 1}">✕</button>` : ''}</label>`).join('');
+  $('add-player').hidden = ps.length >= MAX_PLAYERS;
+  $('party-rounds').innerHTML = [3, 5, 8].map(n =>
+    `<button class="chip${ui.settings.roundsPerPlayer === n ? ' on' : ''}" data-rounds="${n}">${n} rounds</button>`).join('');
+}
+
+function updateStart() {
+  const id = ui.settings.mode === 'daily' ? 'all:everything' : ui.settings.categoryId;
+  const ok = PLAYABLE.get(id);
+  $('start-btn').disabled = !ok;
+  const label = !ok ? 'Pick an open category' : ui.settings.mode === 'daily' ? "Serve today's special ↗" : 'Serve it up ↗';
+  const sub = ok ? (ui.settings.mode === 'daily' ? `📅 ${dailyKey()}` : `${catLabel(id)} · ${DIFFICULTIES[ui.settings.difficulty].label}`) : '';
+  $('start-btn').innerHTML = `${esc(label)}${sub ? `<small>${esc(sub)}</small>` : ''}`;
+}
+
+function renderLobby() {
+  renderModes(); renderTabs(); renderCats(); renderDifficulty(); renderPlayers(); updateStart(); renderStats();
+  $('save-help').innerHTML = Saver.mode === 'file'
+    ? 'Every answer is appended to <code>data/answers/answers.jsonl</code> and <code>answers.csv</code>.'
+    : 'Tip: run <code>python3 serve.py</code> to save every answer straight into <code>data/answers/</code>.';
+}
+
+
+function wireLobby() {
+  $('modes').addEventListener('click', e => {
+    const b = e.target.closest('[data-mode]'); if (!b) return;
+    ui.settings.mode = b.dataset.mode; persist(); Sound.play('pick'); renderModes();
+  });
+  $('cat-tabs').addEventListener('click', e => {
+    const b = e.target.closest('[data-tab]'); if (!b) return;
+    ui.settings.tab = b.dataset.tab; persist(); renderTabs(); renderCats();
+  });
+  $('cats').addEventListener('click', e => {
+    const b = e.target.closest('[data-cat]'); if (!b) return;
+    if (!PLAYABLE.get(b.dataset.cat)) { toast('That one is still waiting for photos 📸'); return; }
+    ui.settings.categoryId = b.dataset.cat; persist(); Sound.play('pick'); renderCats(); updateStart();
+  });
+  $('difficulty').addEventListener('click', e => {
+    const b = e.target.closest('[data-diff]'); if (!b) return;
+    ui.settings.difficulty = b.dataset.diff; persist(); renderDifficulty(); updateStart();
+  });
+  $('players').addEventListener('input', e => {
+    const i = e.target.dataset.player; if (i === undefined) return;
+    ui.settings.players[i] = e.target.value; persist();
+  });
+  $('players').addEventListener('click', e => {
+    const b = e.target.closest('[data-remove]'); if (!b) return;
+    ui.settings.players.splice(Number(b.dataset.remove), 1); persist(); renderPlayers();
+  });
+  $('add-player').addEventListener('click', () => {
+    if (ui.settings.players.length < MAX_PLAYERS) ui.settings.players.push(`Player ${ui.settings.players.length + 1}`);
+    persist(); renderPlayers();
+  });
+  $('party-rounds').addEventListener('click', e => {
+    const b = e.target.closest('[data-rounds]'); if (!b) return;
+    ui.settings.roundsPerPlayer = Number(b.dataset.rounds); persist(); renderPlayers();
+  });
+  $('start-btn').addEventListener('click', startGame);
+  $('link-file').addEventListener('click', () => Saver.link());
+  $('export-csv').addEventListener('click', () => download(`scrandle-rip-answers-${dailyKey()}.csv`, answersToCsv(Saver.log()), 'text/csv'));
+  $('export-json').addEventListener('click', () => download(`scrandle-rip-answers-${dailyKey()}.json`, JSON.stringify(Saver.log(), null, 1), 'application/json'));
+  $('clear-local').addEventListener('click', () => {
+    if (!confirm('Clear the answer log stored in this browser? Files in data/answers/ are not touched.')) return;
+    save(STORE.log, []); Saver.render(); toast('Browser log cleared.');
+  });
+}
+
+/* ---------------- screens ---------------- */
+function show(screen) {
+  ui.screen = screen;
+  for (const id of ['lobby', 'game', 'results']) $(id).hidden = id !== screen;
+  $('home-btn').hidden = screen === 'lobby';
+  Sound.setMode(screen === 'game' ? 'game' : 'lobby');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function startGame() {
+  wakeAudio();
+  const s = ui.settings;
+  if (s.mode === 'daily' && load(STORE.daily, {})[dailyKey()] && !confirm("You've already had today's special. Play it again just for fun? (Your first score is kept.)")) return;
+  const players = s.players.map((p, i) => p.trim() || `Player ${i + 1}`);
+  ui.game = createGame(DB.foods, {
+    mode: s.mode, categoryId: s.categoryId, difficulty: s.difficulty, players, roundsPerPlayer: s.roundsPerPlayer,
+    minPerSource: DB.minPlayable || 8, sessionId: `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 7)}`,
+  });
+  if (ui.game.phase === 'empty') { toast('Not enough plates in that category yet.'); return; }
+  Sound.play('plate');
+  show('game');
+  renderRound();
+}
+
+
+/* ---------------- game ---------------- */
+function money(price) {
+  if (price === null || price === undefined) return null;
+  return price === 0 ? 'Free' : `£${Number(price).toFixed(2)}`;
+}
+
+function cardHtml(food, side) {
+  const c = DB.countries[food.country] || {};
+  const where = [c.flag, food.venue].filter(Boolean).join(' ');
+  const tags = [money(food.price), food.year, c.name].filter(v => v !== null && v !== undefined && v !== '');
+  const img = food.image || food.imageRemote || '';
+  return `
+  <button class="card ${side ? 'right' : 'left'}" data-side="${side}" aria-label="Pick ${esc(food.title)}">
+    <div class="photo">
+      <img src="${esc(img)}" alt="${esc(food.title)}" style="object-position:${esc(food.imagePos || 'center')}" ${food.imageRemote ? `data-fallback="${esc(food.imageRemote)}"` : ''} decoding="async">
+      <span class="key">${side ? '→ / 2' : '← / 1'}</span><span class="steam">♨</span>
+      <span class="stamp">Crowd pick!</span>
+    </div>
+    <h3>${esc(food.title)}</h3>
+    <p class="sub">${esc(food.subtitle)}</p>
+    <div class="meta"><span class="tag">📍 ${esc(where)}</span>${tags.map(t => `<span class="tag">${esc(t)}</span>`).join('')}</div>
+    <div class="ticket"><span class="pct" data-to="${food.rating}">0%</span><small>${esc(DB.sources[food.source] || 'crowd rating')}</small></div>
+  </button>`;
+}
+
+function renderHud() {
+  const g = ui.game, p = currentPlayer(g);
+  $('turn').textContent = g.mode === 'party' ? `${p.name}'s turn` : MODES[g.mode].label;
+  $('hud-cat').textContent = g.mode === 'daily' ? `📅 ${g.dailyKey}` : catLabel(g.categoryId);
+  $('hud-round').textContent = Number.isFinite(g.totalRounds) ? `Plate ${g.round} / ${g.totalRounds}` : `Plate ${g.round}`;
+  $('hud-lives').hidden = g.lives === null;
+  if (g.lives !== null) $('hud-lives').textContent = '❤️'.repeat(Math.max(g.lives, 0)) + '🤍'.repeat(ENDLESS_LIVES - Math.max(g.lives, 0));
+  $('hud-streak').textContent = `🔥 ${p.streak}`;
+  $('hud-score').textContent = g.mode === 'party' ? g.players.map(x => `${x.name}: ${x.score}`).join(' · ') : `${p.score} pts`;
+  const done = Number.isFinite(g.totalRounds) ? (g.round - 1) / g.totalRounds : Math.min(g.round / 30, 1);
+  $('progress').style.width = `${Math.round(done * 100)}%`;
+}
+
+function renderRound() {
+  const g = ui.game;
+  if (g.phase === 'over') { finishGame(); return; }
+  renderHud();
+  $('question').innerHTML = g.mode === 'party'
+    ? `<span>${esc(currentPlayer(g).name)}</span>, which did the crowd rate higher?`
+    : 'Which did <span>the crowd</span> rate higher?';
+  $('arena').className = 'arena';
+  $('arena').innerHTML = cardHtml(g.pair[0], 0) + '<div class="vs" aria-hidden="true">vs</div>' + cardHtml(g.pair[1], 1);
+  $('arena').querySelectorAll('img[data-fallback]').forEach(img => img.addEventListener('error', () => {
+    if (img.src !== img.dataset.fallback) img.src = img.dataset.fallback;
+  }, { once: true }));
+  $('verdict').innerHTML = '';
+  ui.shownAt = performance.now();
+  ui.busy = false;
+}
+
+function countUp(el, to, ms = 900) {
+  const start = performance.now();
+  let lastTick = 0;
+  const step = now => {
+    const t = Math.min((now - start) / ms, 1), eased = 1 - Math.pow(1 - t, 3);
+    el.textContent = `${(to * eased).toFixed(t < 1 ? 0 : 2)}%`;
+    if (now - lastTick > 70 && t < 1) { Sound.play('tick'); lastTick = now; }
+    if (t < 1) requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
+}
+
+function choosePlate(side) {
+  const g = ui.game;
+  if (ui.screen !== 'game' || ui.busy || g.phase !== 'choosing') return;
+  ui.busy = true;
+  const rec = choose(g, side, { ms: performance.now() - ui.shownAt });
+  if (!rec) { ui.busy = false; return; }
+  Saver.record(rec);
+  Sound.play('pick');
+  const winners = winningSides(g.pair);
+  const arena = $('arena');
+  arena.classList.add('revealed');
+  arena.querySelectorAll('.card').forEach(card => {
+    const s = Number(card.dataset.side);
+    card.disabled = true;
+    card.classList.add(winners.includes(s) ? 'winner' : 'loser');
+    if (s === side) card.classList.add('picked');
+    countUp(card.querySelector('.pct'), Number(card.querySelector('.pct').dataset.to));
+  });
+  setTimeout(() => {
+    Sound.play(rec.correct ? 'correct' : 'wrong');
+    if (!rec.correct) arena.querySelector(`.card[data-side="${side}"]`).classList.add('wobble');
+    const line = rec.correct ? (rec.gap < 5 ? pick(CLOSE) : pick(RIGHT)) : pick(WRONG);
+    const last = g.mode !== 'endless' && g.round >= g.totalRounds || g.lives !== null && g.lives <= 0;
+    $('verdict').innerHTML = `
+      <h2 class="${rec.correct ? 'good' : 'bad'}">${esc(line)}</h2>
+      <p>${rec.correct ? `+${rec.points} pts` : 'No points this time'} · the crowd split by ${rec.gap.toFixed(2)} points</p>
+      <button class="next" id="next-btn">${last ? 'See the bill 🧾' : 'Next plate →'}</button>`;
+    $('next-btn').addEventListener('click', nextRound);
+    $('next-btn').focus({ preventScroll: true });
+    renderHud();
+  }, 950);
+}
+
+function nextRound() {
+  const g = ui.game;
+  if (!g || g.phase !== 'revealed') return;
+  advance(g);
+  renderRound();
+}
+
+
+/* ---------------- results ---------------- */
+function foodById(id) {
+  return DB.foods.find(f => f.id === id);
+}
+
+function miniHtml(label, rec) {
+  if (!rec) return '';
+  const f = foodById(rec.pickedId) || {};
+  return `<div class="mini"><img src="${esc(f.image || f.imageRemote || '')}" alt="">
+    <div><small>${esc(label)}</small><b>${esc(rec.pickedTitle)}</b><span>${esc(rec.pickedVenue)} · ${rec.pickedRating}% vs ${rec.otherRating}%</span></div></div>`;
+}
+
+function finishGame() {
+  const g = ui.game, sum = summarize(g);
+  const best = load(STORE.best, {}), key = `${g.mode}:${g.mode === 'daily' ? 'daily' : g.categoryId}`;
+  const newBest = g.mode !== 'party' && sum.score > (best[key] || 0);
+  if (newBest) { best[key] = sum.score; save(STORE.best, best); }
+  if (g.mode === 'daily') {
+    const days = load(STORE.daily, {});
+    if (!days[g.dailyKey]) { days[g.dailyKey] = { correct: sum.correct, rounds: sum.rounds, score: sum.score }; save(STORE.daily, days); }
+  }
+  Sound.play('fanfare');
+  const squares = g.history.map(r => (r.correct ? (r.gap < 10 ? '🟨' : '🟩') : '🟥')).join('');
+  const podium = g.mode === 'party' ? `<div class="podium">${sum.standings.map((p, i) =>
+    `<div><span>${['🥇', '🥈', '🥉', '🍴'][i]} ${esc(p.name)}</span><span>${p.score} pts · ${p.correct}/${p.answered}</span></div>`).join('')}</div>` : '';
+  const head = g.mode === 'party' ? (sum.winner ? `${esc(sum.winner)} takes the last slice!` : "It's a tie at the table!") : esc(sum.grade.title);
+  $('results-body').innerHTML = `
+    <div class="grade">${sum.grade.letter}</div>
+    <h2>${head}</h2>
+    <p class="big">${sum.correct}/${sum.rounds} correct · <b>${sum.score}</b> pts · best streak ${sum.bestStreak}${newBest ? ' · <b style="color:var(--mustard)">New best!</b>' : ''}</p>
+    <div class="squares" aria-label="Round by round results">${squares}</div>
+    ${podium}
+    <div class="highlights">${miniHtml('Plate of the day', sum.plateOfTheDay)}${miniHtml('Closest call you won', sum.closestCall)}</div>
+    <div class="history">${g.history.map(r => `<div><span>${r.correct ? '✅' : '❌'}</span>
+      <span><b>${esc(r.pickedTitle)}</b> <em>over</em> ${esc(r.otherTitle)}${g.mode === 'party' ? ` <em>· ${esc(r.player)}</em>` : ''}</span>
+      <em>${r.pickedRating}% vs ${r.otherRating}%</em></div>`).join('')}</div>
+    <p class="note">${Saver.mode === 'file' ? `✓ All ${g.history.length} answers saved to <code>data/answers/answers.jsonl</code> and <code>answers.csv</code>.` : `✓ ${g.history.length} answers logged in this browser. Use the lobby buttons to export them.`}</p>
+    <div class="actions">
+      <button class="next" id="again-btn">Another round ↻</button>
+      <button class="ghost" id="share-btn">📋 Copy results</button>
+      <button class="ghost" id="lobby-btn">Back to the lobby</button>
+    </div>`;
+  $('again-btn').addEventListener('click', startGame);
+  $('lobby-btn').addEventListener('click', goLobby);
+  $('share-btn').addEventListener('click', async () => {
+    const text = shareText(g, GAME_TITLE);
+    try { await navigator.clipboard.writeText(text); toast('Copied! Go brag. 📋'); } catch { prompt('Copy your results:', text); }
+  });
+  show('results');
+}
+
+function goLobby() {
+  ui.game = null;
+  show('lobby');
+  renderLobby();
+}
+
+/* ---------------- boot ---------------- */
+function wireGlobal() {
+  $('home-btn').addEventListener('click', () => {
+    if (ui.screen === 'game' && ui.game?.history.length && !confirm('Leave this game? Answers so far are already saved.')) return;
+    goLobby();
+  });
+  $('arena').addEventListener('click', e => {
+    const card = e.target.closest('.card'); if (card) choosePlate(Number(card.dataset.side));
+  });
+  $('music-btn').addEventListener('click', async () => {
+    if (Sound.isPlaying()) { Sound.stopMusic(); ui.settings.musicOn = false; } else { ui.settings.musicOn = true; await Sound.startMusic(); }
+    persist(); syncSoundUi();
+  });
+  $('music-vol').addEventListener('input', e => { Sound.setMusic(e.target.value / 100); save(STORE.sound, Sound.settings); });
+  $('mute-btn').addEventListener('click', () => { Sound.setMuted(!Sound.settings.muted); save(STORE.sound, Sound.settings); syncSoundUi(); });
+  document.addEventListener('keydown', e => {
+    if (e.target.matches('input, textarea') || e.metaKey || e.ctrlKey || e.altKey) return;
+    const k = e.key.toLowerCase();
+    if (k === 'm') { $('mute-btn').click(); return; }
+    if (ui.screen !== 'game' || !ui.game) return;
+    if (ui.game.phase === 'choosing' && (k === 'arrowleft' || k === '1')) { e.preventDefault(); choosePlate(0); }
+    else if (ui.game.phase === 'choosing' && (k === 'arrowright' || k === '2')) { e.preventDefault(); choosePlate(1); }
+    else if (ui.game.phase === 'revealed' && (k === 'enter' || k === ' ') && $('next-btn')) { e.preventDefault(); nextRound(); }
+  });
+  // Browsers only allow audio after a gesture: the first click anywhere starts the lobby music.
+  const firstGesture = () => { wakeAudio(); };
+  document.addEventListener('pointerdown', firstGesture, { once: true });
+  document.addEventListener('keydown', firstGesture, { once: true });
+}
+
+function boot() {
+  document.title = GAME_TITLE;
+  const words = GAME_TITLE.split(' ');
+  $('title-neon').innerHTML = `${esc(words.slice(0, -1).join(' '))} <span class="last">${esc(words.at(-1))}</span>`;
+  $('db-info').textContent = DB.foods.length
+    ? `${DB.foods.length.toLocaleString()} plates · data built ${DB.builtAt ? new Date(DB.builtAt).toLocaleDateString() : '?'}.`
+    : 'No food data found: run python3 tools/build_db.py';
+  Sound.load(load(STORE.sound, {}));
+  syncSoundUi();
+  wireLobby();
+  wireGlobal();
+  renderLobby();
+  Saver.init().then(renderLobby);
+  if (!DB.foods.length) { $('start-btn').disabled = true; $('start-btn').textContent = 'No food data yet'; }
+  window.__esr = { ui, DB, Saver, Sound, choosePlate, nextRound };
+}
+
+boot();
+})();
+</script>
+</body>
+</html>

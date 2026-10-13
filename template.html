@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{TITLE}}</title>
+<meta name="description" content="Two plates. One crowd. Guess which food the internet rated higher.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8D%BD%EF%B8%8F%3C/text%3E%3C/svg%3E">
+<!--INLINE_STYLES-->
+</head>
+<body>
+<div class="app" id="app">
+  <header class="topbar">
+    <div class="group">
+      <button class="chip" id="home-btn" hidden>← Lobby</button>
+      <span class="chip save-pill" id="save-pill" title="Where your answers are saved"><span class="dot"></span><span id="save-text">Checking save file…</span></span>
+    </div>
+    <div class="group">
+      <button class="chip" id="music-btn" aria-pressed="false">🎵 Music: off</button>
+      <label class="chip vol" title="Music volume">🔈<input id="music-vol" type="range" min="0" max="100" value="55" aria-label="Music volume"></label>
+      <button class="chip" id="mute-btn" aria-pressed="false" title="Mute everything (M)">🔊</button>
+    </div>
+  </header>
+
+  <!-- ================= LOBBY ================= -->
+  <section id="lobby">
+    <div class="marquee">
+      <h1 class="neon" id="title-neon">{{TITLE}}</h1>
+      <p class="tagline">Two plates. One crowd. <b>Back the scran the internet loved more.</b></p>
+    </div>
+
+    <div class="lobby-grid">
+      <div class="panel">
+        <h2 class="section-title">Tonight's menu <span id="mode-hint"></span></h2>
+        <div class="modes" id="modes"></div>
+
+        <h2 class="section-title gap">Pick a category <span id="cat-count"></span></h2>
+        <div class="tabs" id="cat-tabs"></div>
+        <div class="cats" id="cats"></div>
+        <p class="note" id="cat-note"></p>
+      </div>
+
+      <div class="panel">
+        <div id="party-setup" hidden>
+          <h2 class="section-title">Who's at the table? <span>2–4 players</span></h2>
+          <div class="players" id="players"></div>
+          <div class="row"><button class="ghost" id="add-player">+ Add a seat</button></div>
+          <h2 class="section-title gap">Rounds each</h2>
+          <div class="tabs" id="party-rounds"></div>
+        </div>
+
+        <div id="difficulty-setup">
+          <h2 class="section-title">How spicy?</h2>
+          <div class="tabs" id="difficulty"></div>
+          <p class="note" id="difficulty-note"></p>
+        </div>
+
+        <button class="start" id="start-btn">Serve it up ↗</button>
+        <p class="note" style="text-align:center"><kbd>←</kbd> <kbd>→</kbd> or <kbd>1</kbd> <kbd>2</kbd> to pick · <kbd>Enter</kbd> next · <kbd>M</kbd> mute</p>
+
+        <h2 class="section-title gap">Your tab <span id="save-detail"></span></h2>
+        <div class="stats">
+          <div class="stat"><b id="st-answered">0</b><small>answers saved</small></div>
+          <div class="stat"><b id="st-acc">–</b><small>accuracy</small></div>
+          <div class="stat"><b id="st-best">0</b><small>best score</small></div>
+        </div>
+        <div class="row">
+          <button class="ghost" id="link-file" hidden>🔗 Save answers to a file…</button>
+          <button class="ghost" id="export-csv">⬇ Answers CSV</button>
+          <button class="ghost" id="export-json">⬇ Answers JSON</button>
+          <button class="ghost" id="clear-local">Clear browser log</button>
+        </div>
+        <p class="note" id="save-help"></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= GAME ================= -->
+  <section id="game" hidden>
+    <div class="hud">
+      <div class="left"><span class="turn" id="turn"></span><span class="chip" id="hud-cat"></span></div>
+      <div class="right"><span class="chip" id="hud-round"></span><span class="chip lives" id="hud-lives" hidden></span><span class="chip" id="hud-streak"></span><span class="chip on" id="hud-score"></span></div>
+    </div>
+    <div class="progress"><i id="progress"></i></div>
+    <p class="question" id="question">Which did <span>the crowd</span> rate higher?</p>
+    <div class="arena" id="arena"></div>
+    <div class="verdict" id="verdict"></div>
+  </section>
+
+  <!-- ================= RESULTS ================= -->
+  <section id="results" hidden>
+    <div class="results panel" id="results-body"></div>
+  </section>
+
+  <footer class="footer">
+    Ratings &amp; photos: the brilliant <a href="https://scrandle.com" target="_blank" rel="noopener">Scrandle</a> community (and <a href="https://x.com/FootyScran" target="_blank" rel="noopener">@FootyScran</a> posters).
+    Fan-made, non-commercial. <span id="db-info"></span>
+  </footer>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+<!--INLINE_DATA-->
+<!--INLINE_SCRIPTS-->
+</body>
+</html>
